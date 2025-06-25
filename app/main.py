@@ -1,23 +1,23 @@
+from __future__ import annotations
+
+
 class Person:
     people = {}
 
-    def __init__(self, name: str, age: int, **kwargs) -> None:
+    def __init__(self, name: str, age: int) -> None:
         self.name = name
         self.age = age
         Person.people[name] = self
 
 
 def create_person_list(people: list) -> list:
-    result = []
-    for person in people:
-        name = person["name"]
-        age = person["age"]
-        result.append(Person(name, age))
+    Person.people = {}
+    result = [Person(person["name"], person["age"]) for person in people]
 
-    for index, person in enumerate(people):
-        current_name = Person.people[person["name"]]
+    for person in people:
+        current_person = Person.people[person["name"]]
         if "wife" in person and person["wife"] is not None:
-            current_name.wife = Person.people.get(person["wife"])
+            current_person.wife = Person.people.get(person["wife"])
         if "husband" in person and person["husband"] is not None:
-            current_name.husband = Person.people.get(person["husband"])
+            current_person.husband = Person.people.get(person["husband"])
     return result
